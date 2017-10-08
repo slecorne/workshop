@@ -1,0 +1,26 @@
+{
+  "name": "workshop",
+  "version": "1.0.0",
+  "description": "Tests + Git workshop",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jshint": "^2.0.4",
+    "jasmine": "^2.8.0",
+    "jshint": "^2.9.5"
+  },
+  "scripts": {
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slecorne/workshop.git"
+  },
+  "author": "Stéphane Lecorney",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/slecorne/workshop/issues"
+  },
+  "homepage": "https://github.com/slecorne/workshop#readme"
+}
