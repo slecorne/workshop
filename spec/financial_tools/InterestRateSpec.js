@@ -50,6 +50,15 @@ describe("InterestRate", function() {
     expect(RateCalculator.interest(testData)).toEqual(10);
   });
 
+  it("should correct rate bigger than 1 (hotfix 08/10/2017)", function() {
+    var testData = {};
+    testData.deposit = 1000;
+    testData.start = "2016-01-01";
+    testData.end = "2017-01-01";
+    testData.rate = 2.5;
+
+    expect(RateCalculator.interest(testData)).toEqual(25);
+  });
 
   it("should compute correct negative rate", function() {
     var testData = {};

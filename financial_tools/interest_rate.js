@@ -82,7 +82,15 @@ function interest(data) {
 	var startDate = new Date(data.start);
 	var endDate = new Date(data.end);
 	var numDays = numDaysWithInterest(startDate, endDate);
-	return data.deposit*data.rate*(numDays/YEAR);
+
+	var rate = data.rate;
+	// HOTFIX 06/10/2017
+	// some rate in database are stored incorrectly as rate (2.5 for 2.5%) instead of percent (0.025 for 2.5%)
+	if (rate > 1) {
+		rate/=100;
+	}
+
+	return data.deposit*rate*(numDays/YEAR);
 }
 
 
