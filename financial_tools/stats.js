@@ -14,7 +14,7 @@ function performanceMax(data) {
 
 function bestStocks(data) {
 	var bestPerformance = performanceMax(data);
-	return _.select(data, function(stock) {
+	return _.filter(data, function(stock) {
 		return stock.performance == bestPerformance;
 	});
 }
