@@ -1,5 +1,6 @@
 'use strict';
 
+var leapYear = require('leap-year');
 
 
 // convention CH/Eu is 360 days with interest
@@ -11,26 +12,57 @@ function numDaysWithInterest(start, end) {
 	if (end.getYear()===start.getYear()) {
 		if (end.getMonth()===start.getMonth()) {
 			// within a month
-			days = end.getDay()-start.getDay();
+			days = end.getUTCDate()-start.getUTCDate();
 			return days;
 		} 
 		// within same year
 		// count 30 days for each full months betweend start and end
-		days = 30*(end.getMonth()-start.getMonth()-1);
+		var numCompleteMonths = (end.getMonth()-start.getMonth()-1);
+		days += 30 * numCompleteMonths;
+		var startMonth = 30 - start.getUTCDate();
+		var endMonth = end.getUTCDate();
 		// add days of initial month
-		var startMonth = 30 - start.getDay();
-		days += startMonth>0 ? startMonth : 0;
-		var endMonth = start.getDay();
-		days += endMonth>30 ? 30 : endMonth;
+		// handle specific case february
+		if (start.getMonth()!==1 /*getMonth starts at 0*/ ) { 
+			// normal case
+			days += startMonth>0 ? startMonth : 0;
+		} else {
+			if (leapYear(start.getYear()) && start.getUTCDate()==29) {
+				//last day is 29
+				// no day counted for that month
+			} else if (!leapYear(start.getYear()) && start.getUTCDate()==28)  {
+				// last day is 28
+				// no day counted for that month
+			} else {
+				// normal case
+				days += startMonth>0 ? startMonth : 0;
+			}
+		}
 		// add day of final month
+		// handle specific case february
+		if (end.getMonth()!==1 /*getMonth starts at 0*/ ) { 
+			// normal case
+			days += endMonth>30 ? 30 : endMonth;
+		} else {
+			if (leapYear(end.getYear()) && end.getUTCDate()==29) {
+				//last day is 29
+				// no day counted for that month
+				days += 30;
+			} else if (!leapYear(end.getYear()) && end.getUTCDate()==28)  {
+				// last day is 28
+				// 30 days for that month
+				days += 30;
+			} else {
+				// normal case
+				days += endMonth>30 ? 30 : endMonth;
+			}
+		}
+
 	} else {
 		// different years
 		days = 360*(end.getYear()-start.getYear());
+	}
 
-	}
-	if (end.getMonth()!==start.getMonth()) {
-		days+= 30*(end.getMonth()-start.getMonth());
-	}
 	return days;
 }
 
