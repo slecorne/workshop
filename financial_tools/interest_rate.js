@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 // convention CH/Eu is 360 days with interest
 // https://www.vermoegenszentrum.ch/conseils/articles/particuliers/lever-une-hypotheque/les-methodes-de-decompte-des-interets.html
 // http://www.pambianco.net/new-page-2/programme-cfc/theorie/1ere-annee/les-interets/calcul-des-jours.html
@@ -11,26 +9,25 @@ function numDaysWithInterest(start, end) {
 	if (end.getYear()===start.getYear()) {
 		if (end.getMonth()===start.getMonth()) {
 			// within a month
-			days = end.getDay()-start.getDay();
+			days = end.getUTCDate()-start.getUTCDate();
 			return days;
 		} 
 		// within same year
 		// count 30 days for each full months betweend start and end
-		days = 30*(end.getMonth()-start.getMonth()-1);
+		var numCompleteMonths = (end.getMonth()-start.getMonth()-1);
+		days += 30 * numCompleteMonths;
+		var startMonth = 30 - start.getUTCDate();
+		var endMonth = end.getUTCDate();
 		// add days of initial month
-		var startMonth = 30 - start.getDay();
 		days += startMonth>0 ? startMonth : 0;
-		var endMonth = start.getDay();
-		days += endMonth>30 ? 30 : endMonth;
 		// add day of final month
+		days += endMonth>30 ? 30 : endMonth;
+
 	} else {
 		// different years
 		days = 360*(end.getYear()-start.getYear());
+	}
 
-	}
-	if (end.getMonth()!==start.getMonth()) {
-		days+= 30*(end.getMonth()-start.getMonth());
-	}
 	return days;
 }
 
