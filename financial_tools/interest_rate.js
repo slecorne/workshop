@@ -66,6 +66,7 @@ function numDaysWithInterest(start, end) {
 	return days;
 }
 
+
 // data should contain:
 // start: start date
 // end: end date
@@ -84,7 +85,6 @@ function interest(data) {
 	var numDays = numDaysWithInterest(startDate, endDate);
 	return data.deposit*data.rate*(numDays/YEAR);
 }
-
 
 module.exports = {
 	interest: interest,

@@ -4,7 +4,8 @@
   "description": "Tests + Git workshop",
   "main": "index.js",
   "dependencies": {
-    "leap-year": "^2.0.1"
+    "leap-year": "^2.0.1",
+    "lodash": "^3.10.1"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
