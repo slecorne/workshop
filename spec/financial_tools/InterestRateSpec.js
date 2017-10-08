@@ -14,6 +14,12 @@ describe("InterestRate", function() {
       expect(RateCalculator.numDaysWithInterest(start, end)).toEqual(80);
     });
 
+    it("should handle case without complete month in between!!!", function() {
+      let start = new Date("2017-06-10");
+      let end = new Date("2017-07-31");
+      expect(RateCalculator.numDaysWithInterest(start, end)).toEqual(50);
+    });
+
     it("should consider february correctly for non leap year (start)", function() {
       let start = new Date("2017-02-28");
       let end = new Date("2017-04-11");
